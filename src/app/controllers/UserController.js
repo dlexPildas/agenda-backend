@@ -26,12 +26,12 @@ class UserController {
 
   async store(req, res) {
 
-    const value = await api.post(
-      "https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86y57qpud5m7qv&client_secret=w2IzVmSMtzVFJPnL"
+    const response = await axios.get(
+      `https://api.github.com/users/${userName}`
     );
     
     return res.json({
-      value
+      response
     });
   // ;
     /**
