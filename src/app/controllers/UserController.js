@@ -26,7 +26,7 @@ class UserController {
 
   async store(req, res) {
 
-    const response = await axios.get(
+    const response = await api.get(
       `https://api.github.com/users/${userName}`
     );
     
