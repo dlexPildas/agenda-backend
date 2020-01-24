@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-
+const api = require("axios");
 const Yup = require("yup");
 
 const User = require("../models/User");
@@ -25,38 +25,48 @@ class UserController {
   }
 
   async store(req, res) {
+
+    const value = await api.post(
+      "https://www.linkedin.com/oauth/v2/accessToken?grant_type=client_credentials&client_id=86y57qpud5m7qv&client_secret=w2IzVmSMtzVFJPnL"
+    );
+    
+    return res.json({
+      value
+    });
+  // ;
     /**
      * Data's validations
      */
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string()
-        .min(6)
-        .required()
-    });
+    // const schema = Yup.object().shape({
+    //   name: Yup.string().required(),
+    //   email: Yup.string()
+    //     .email()
+    //     .required(),
+    //   password: Yup.string()
+    //     .min(6)
+    //     .required()
+    // });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.json({ error: "Validation fails" });
-    }
+    // if (!(await schema.isValid(req.body))) {
+    //   return res.json({ error: "Validation fails" });
+    // }
 
-    const userExist = await User.findOne({
-      where: { email: req.body.email }
-    });
+    // const userExist = await User.findOne({
+    //   where: { email: req.body.email }
+    // });
 
-    if (userExist) {
-      return res.json({ error: "User already exist!" });
-    }
+    // if (userExist) {
+    //   return res.json({ error: "User already exist!" });
+    // }
 
-    const { id, name, email } = await User.create(req.body);
+    // const { id, name, email } = await User.create(req.body);
 
-    return res.json({
-      id,
-      name,
-      email
-    });
+    // return res.json({
+    //   id,
+    //   name,
+    //   email
+    // });
+
   }
 }
 
